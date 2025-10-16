@@ -40,7 +40,7 @@ export default function Home() {
           Half Glass Full Generator
         </h1>
         <p className="text-center text-gray-600 mb-8">
-          Turn negative thoughts into positive perspectives!
+          Turn &quot;negative&quot; thoughts into positive perspectives!
         </p>
 
         <form onSubmit={handleSubmit} className="mb-8">
@@ -77,7 +77,7 @@ export default function Home() {
         <div className="mt-12 bg-white p-6 rounded-lg shadow">
           <h2 className="text-2xl font-bold text-blue-700 mb-4">How It Works</h2>
           <ol className="list-decimal pl-5 space-y-2 text-gray-700">
-            <li>Type your "negative" thought in the box</li>
+            <li>Type your &quot;negative&quot; thought in the box</li>
             <li>Click &quot;Transform to Positive&quot;</li>
             <li>Receive an AI-generated positive perspective</li>
             <li>Try seeing things in this new light</li>
