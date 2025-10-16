@@ -8,33 +8,30 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!inputText.trim()) return;
-  
-  setIsLoading(true);
-  try {
-    const response = await fetch('/api/transform', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ text: inputText }),
-    });
+    e.preventDefault();
+    if (!inputText.trim()) return;
     
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Request failed');
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/transform', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: inputText }),
+      });
+      
+      const data = await response.json();
+      if (data.result) {
+        setPositiveOutput(data.result);
+      }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Service temporarily unavailable';
+      setPositiveOutput(`Sorry, ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
     }
-    
-    const data = await response.json();
-    setPositiveOutput(data.result);
-  } catch (error: any) {
-    setPositiveOutput(`Error: ${error.message || 'Service unavailable'}`);
-    console.error('API Error:', error);
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-blue-50 p-8">
@@ -43,7 +40,7 @@ export default function Home() {
           Half Glass Full Generator
         </h1>
         <p className="text-center text-gray-600 mb-8">
-          Turn "negative" thoughts into positive perspectives!
+          Turn negative thoughts into positive perspectives with AI
         </p>
 
         <form onSubmit={handleSubmit} className="mb-8">
@@ -80,22 +77,17 @@ export default function Home() {
         <div className="mt-12 bg-white p-6 rounded-lg shadow">
           <h2 className="text-2xl font-bold text-blue-700 mb-4">How It Works</h2>
           <ol className="list-decimal pl-5 space-y-2 text-gray-700">
-            <li>Type your "negative" thought in the box</li>
-            <li>Click "Transform to Positive"</li>
+            <li>Type your negative thought in the box</li>
+            <li>Click &quot;Transform to Positive&quot;</li>
             <li>Receive an AI-generated positive perspective</li>
             <li>Try seeing things in this new light</li>
           </ol>
         </div>
-
-        
-
-
       </main>
 
       <footer className="mt-16 text-center text-gray-500 text-sm">
         <p>© {new Date().getFullYear()} Half Glass Full Generator - Brighten your perspective with AI</p>
       </footer>
-    
     </div>
   );
 }
